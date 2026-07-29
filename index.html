@@ -51,6 +51,17 @@ a {
   margin: 0 auto;
   max-width: 1440px;
   padding: 0 5vw;
+  position: sticky;
+  top: 0;
+  transition: background 240ms ease, box-shadow 240ms ease, height 240ms ease;
+  z-index: 50;
+}
+
+.site-header.is-scrolled {
+  backdrop-filter: blur(12px);
+  background: rgba(242, 239, 230, 0.92);
+  box-shadow: 0 1px 0 var(--line);
+  height: 72px;
 }
 
 .monogram {
@@ -73,7 +84,26 @@ nav a {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.11em;
+  position: relative;
   text-transform: uppercase;
+}
+
+nav a::after {
+  background: var(--orange);
+  bottom: -0.35rem;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+  width: 100%;
+}
+
+nav a:hover::after,
+nav a.is-active::after {
+  transform: scaleX(1);
 }
 
 nav a,
@@ -103,6 +133,38 @@ footer a:hover {
 
 .hero-copy {
   max-width: 900px;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-copy,
+.portrait-wrap {
+  animation: fade-up 650ms ease both;
+}
+
+.portrait-wrap {
+  animation-delay: 120ms;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 .eyebrow,
@@ -187,6 +249,7 @@ h1 em {
   letter-spacing: 0.08em;
   padding: 0.3rem 0;
   text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease;
 }
 
 .portrait-wrap {
@@ -317,6 +380,11 @@ h1 em {
   gap: 3vw;
   grid-template-columns: 0.25fr 0.8fr 1fr;
   padding: 2.5rem 0;
+  transition: background 200ms ease;
+}
+
+.role:hover {
+  background: rgba(23, 32, 28, 0.03);
 }
 
 .role-number {
@@ -408,6 +476,12 @@ h1 em {
   letter-spacing: 0.08em;
   padding: 0.5rem 0;
   text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.contact-links a:hover {
+  border-color: rgba(242, 239, 230, 0.75);
+  transform: translateX(3px);
 }
 
 footer {
@@ -485,7 +559,8 @@ footer p {
 }
 
 @media (max-width: 560px) {
-  .site-header {
+  .site-header,
+  .site-header.is-scrolled {
     height: 76px;
   }
 
@@ -522,17 +597,30 @@ footer p {
     scroll-behavior: auto;
   }
 
-  * {
+  *,
+  .reveal {
+    animation: none !important;
     transition: none !important;
+  }
+
+  .reveal,
+  .hero-copy,
+  .portrait-wrap {
+    opacity: 1;
+    transform: none;
   }
 }
 </style>
 </head>
 <body>
 <main>
-  <header class="site-header">
+  <header class="site-header" id="header">
     <a class="monogram" href="#top" aria-label="Joseph Andrew Sienes, home">J<span>A</span>S</a>
-    <nav aria-label="Main navigation"><a href="#about">About</a><a href="#practice">Practice</a><a href="#contact">Contact</a></nav>
+    <nav aria-label="Main navigation">
+      <a href="#about" data-section="about">About</a>
+      <a href="#practice" data-section="practice">Practice</a>
+      <a href="#contact" data-section="contact">Contact</a>
+    </nav>
   </header>
 
   <section class="hero" id="top">
@@ -553,6 +641,7 @@ footer p {
   </section>
 
   <section class="statement" id="about">
+    <div class="reveal">
     <p class="section-label">A short introduction</p>
     <div class="statement-grid">
       <h2>I’ve spent 20 years close to the work—<span>writing code, shaping products, and supporting teams.</span></h2>
@@ -561,29 +650,37 @@ footer p {
         <p>Today I bring an engineer’s eye for systems and a facilitator’s care for people. I’m at my best when the problem is fuzzy, the room is full of perspectives, and there’s a better way forward waiting to be found.</p>
       </div>
     </div>
+    </div>
   </section>
 
   <section class="practice" id="practice">
+    <div class="reveal">
     <div class="practice-heading"><p class="section-label">How I work</p><h2>Serious about the work. Light about everything else.</h2></div>
     <div class="role-list">
       <article class="role"><p class="role-number">01</p><h3>Product-minded engineering</h3><p>I’ve built for the web and mobile—across iOS, cross-platform apps, and everything between—so I understand the work, not just the workflow.</p></article><article class="role"><p class="role-number">02</p><h3>Calm, useful facilitation</h3><p>I create the conditions for honest conversations, clear decisions, and momentum that teams can feel.</p></article><article class="role"><p class="role-number">03</p><h3>Systems that stay human</h3><p>Processes should help people do their best work. I keep the useful parts and question the ceremony.</p></article>
     </div>
+    </div>
   </section>
 
   <section class="timeline" aria-label="Career timeline">
+    <div class="reveal">
     <p class="section-label">The long view</p>
     <div class="chapters"><div class="chapter"><p>2005</p><h3>Started building for the web</h3></div><div class="chapter"><p>2011</p><h3>Found a home in agile teams</h3></div><div class="chapter"><p>Today</p><h3>Helping people and products move</h3></div></div>
+    </div>
   </section>
 
   <section class="beyond">
+    <div class="reveal">
     <p class="section-label">Beyond the backlog</p>
     <div class="beyond-grid">
       <h2>Football. Photography. Community. The things that keep the pixels in perspective.</h2>
       <p>Before every profile became a feed, I made small corners of the web for the things I cared about—from Pinoy football to photography and the local tech community. That instinct hasn’t changed: notice what matters, then make a place for it.</p>
     </div>
+    </div>
   </section>
 
   <section class="contact" id="contact">
+    <div class="reveal">
     <p class="section-label">Say hello</p>
     <div class="contact-content">
       <h2>Good work starts with a good conversation.</h2>
@@ -594,9 +691,62 @@ footer p {
         <a href="https://x.com/andsien" target="_blank" rel="noreferrer">Follow on X <span aria-hidden="true">↗</span></a>
       </div>
     </div>
+    </div>
   </section>
 
   <footer><p>© 2026 Joseph Andrew Sienes</p><p>Dumaguete roots · Building everywhere</p><a href="#top">Back to top ↑</a></footer>
 </main>
+<script>
+(function () {
+  var header = document.getElementById("header");
+  var navLinks = document.querySelectorAll("nav a[data-section]");
+  var sections = ["about", "practice", "contact"].map(function (id) {
+    return document.getElementById(id);
+  }).filter(Boolean);
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function onScroll() {
+    if (header) {
+      header.classList.toggle("is-scrolled", window.scrollY > 40);
+    }
+
+    var current = sections[0] ? sections[0].id : "";
+    sections.forEach(function (section) {
+      if (window.scrollY >= section.offsetTop - 120) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(function (link) {
+      link.classList.toggle("is-active", link.dataset.section === current);
+    });
+  }
+
+  if (!reducedMotion) {
+    var reveals = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
+
+      reveals.forEach(function (el) { observer.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add("is-visible"); });
+    }
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) {
+      el.classList.add("is-visible");
+    });
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+})();
+</script>
 </body>
 </html>
